@@ -1,13 +1,21 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"fmt"
+
+	"github.com/gin-gonic/gin"
+	"github.com/gl1n0m3c/learning_gin/internal/config"
+)
 
 func main() {
 	server := gin.Default()
 
-	server.GET("/test", func(ctx *gin.Context) {
-		ctx.JSON(200, gin.H{"message": "Hello World!"})
-	})
+	cfg, err := config.InitConfig()
+	if err != nil {
+		fmt.Printf("Config error: %v\n", err)
+		return
+	}
+	fmt.Println(*cfg)
 
-	server.Run()
+	server.Run(":8000")
 }
